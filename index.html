@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f7f5ff">
+  <meta name="description" content="TaskFlow helps you organize your day and achieve your goals.">
+  <title>TaskFlow — Organize your day</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="TaskFlow home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="m6 12 4 4L19 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        <span class="brand-copy">
+          <span class="brand-name">TaskFlow</span>
+          <span class="brand-tagline">Organize your day, achieve your goals.</span>
+        </span>
+      </a>
+      <div class="topbar-actions">
+        <p class="today-date" id="current-date"></p>
+        <button class="theme-toggle icon-button" id="theme-toggle" type="button" aria-label="Switch to dark mode" title="Switch color theme">
+          <svg class="sun-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/>
+            <path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+          <svg class="moon-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M20.2 15.1A8.5 8.5 0 0 1 8.9 3.8 8.6 8.6 0 1 0 20.2 15.1Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <section class="welcome-row" aria-labelledby="welcome-title">
+        <div>
+          <p class="eyebrow">YOUR PERSONAL WORKSPACE</p>
+          <h1 id="welcome-title">Make today count<span class="heading-period">.</span></h1>
+          <p class="welcome-subtitle">A little progress each day adds up to big results.</p>
+        </div>
+        <div class="progress-card" aria-label="Task completion progress">
+          <div class="progress-heading">
+            <span>Daily progress</span>
+            <strong id="progress-value">0%</strong>
+          </div>
+          <div class="progress-track" id="progress-track" role="progressbar" aria-label="Tasks completed" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+            <span class="progress-fill" id="progress-fill"></span>
+          </div>
+          <p class="progress-caption" id="progress-caption">A fresh start. You’ve got this!</p>
+        </div>
+      </section>
+
+      <section class="stats-grid" aria-label="Task summary">
+        <article class="stat-card stat-total">
+          <span class="stat-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M8 6h12M8 12h12M8 18h12M3.5 6h.01M3.5 12h.01M3.5 18h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </span>
+          <div><p>Total tasks</p><strong id="total-count">0</strong><span>in your workspace</span></div>
+        </article>
+        <article class="stat-card stat-completed">
+          <span class="stat-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><path d="m5 12 4.5 4.5L19 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <div><p>Completed</p><strong id="completed-count">0</strong><span>nicely done</span></div>
+        </article>
+        <article class="stat-card stat-pending">
+          <span class="stat-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.8"/><path d="M12 8v4l2.5 1.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <div><p>Pending</p><strong id="pending-count">0</strong><span>ready when you are</span></div>
+        </article>
+        <article class="stat-card stat-today">
+          <span class="stat-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><rect x="4" y="6" width="16" height="14" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M8 3v5m8-5v5M4 10h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          </span>
+          <div><p>Today's tasks</p><strong id="today-count">0</strong><span>on your agenda</span></div>
+        </article>
+      </section>
+
+      <section class="workspace-grid">
+        <aside class="task-form-card panel" aria-labelledby="form-title">
+          <div class="section-heading form-heading">
+            <div>
+              <p class="eyebrow">PLAN IT OUT</p>
+              <h2 id="form-title">Add a task</h2>
+            </div>
+            <span class="heading-decoration" aria-hidden="true">✦</span>
+          </div>
+          <form id="task-form">
+            <label class="field-label" for="task-title">Task title <span class="required-mark">*</span></label>
+            <input id="task-title" name="title" type="text" maxlength="120" placeholder="What needs to get done?" required>
+
+            <label class="field-label" for="task-description">Description <span class="optional-label">Optional</span></label>
+            <textarea id="task-description" name="description" rows="3" maxlength="500" placeholder="Add a few details to help you along..."></textarea>
+
+            <div class="form-row">
+              <div class="field-group">
+                <label class="field-label" for="task-due-date">Due date</label>
+                <input id="task-due-date" name="dueDate" type="date">
+              </div>
+              <div class="field-group">
+                <label class="field-label" for="task-priority">Priority</label>
+                <select id="task-priority" name="priority">
+                  <option value="medium" selected>Medium</option>
+                  <option value="high">High</option>
+                  <option value="low">Low</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-actions">
+              <button class="button button-primary submit-button" id="submit-task" type="submit">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14m-7-7h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                <span>Add task</span>
+              </button>
+              <button class="button button-quiet" id="cancel-edit" type="button" hidden>Cancel</button>
+            </div>
+          </form>
+        </aside>
+
+        <section class="tasks-panel panel" aria-labelledby="tasks-heading">
+          <div class="section-heading tasks-heading-row">
+            <div>
+              <p class="eyebrow">STAY ON TRACK</p>
+              <h2 id="tasks-heading">Your tasks</h2>
+            </div>
+            <span class="task-total-pill" id="visible-count">0 tasks</span>
+          </div>
+
+          <nav class="category-tabs" aria-label="Task categories">
+            <button class="category-tab active" type="button" data-category="all" aria-pressed="true">All tasks <span id="all-tab-count">0</span></button>
+            <button class="category-tab" type="button" data-category="today" aria-pressed="false">Today <span id="today-tab-count">0</span></button>
+            <button class="category-tab" type="button" data-category="upcoming" aria-pressed="false">Upcoming <span id="upcoming-tab-count">0</span></button>
+            <button class="category-tab" type="button" data-category="completed" aria-pressed="false">Completed <span id="completed-tab-count">0</span></button>
+          </nav>
+
+          <div class="task-tools">
+            <label class="search-box" for="task-search">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m16 16 4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+              <input id="task-search" type="search" placeholder="Search tasks..." autocomplete="off">
+            </label>
+            <label class="select-wrap" for="priority-filter">
+              <span class="sr-only">Filter by priority</span>
+              <select id="priority-filter">
+                <option value="all">All priorities</option>
+                <option value="high">High priority</option>
+                <option value="medium">Medium priority</option>
+                <option value="low">Low priority</option>
+              </select>
+            </label>
+            <label class="select-wrap sort-select" for="sort-tasks">
+              <span class="sr-only">Sort tasks</span>
+              <select id="sort-tasks">
+                <option value="date-asc">Due date: earliest</option>
+                <option value="date-desc">Due date: latest</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="task-list" id="task-list" aria-live="polite"></div>
+        </section>
+      </section>
+    </main>
+    <footer class="app-footer"><span>Made for a more focused day</span><span class="footer-dot" aria-hidden="true">·</span><span>Your tasks stay on this device</span></footer>
+  </div>
+</body>
+</html>
